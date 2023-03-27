@@ -1,0 +1,103 @@
+version: "3.3"
+
+services:
+  # ================================= Bot =====================================
+  # Generic Rasa bot, used to run console for example.
+  bot:
+    build:
+      context: .
+      dockerfile: ./docker/bot.Dockerfile
+    restart: unless-stopped
+    volumes:
+      - ./bot/:/bot/
+    ports:
+      - 5006:5006
+      - 5007:5007
+    depends_on:
+      - actions
+      - mysqldb
+      - backup-mysqldb 
+    networks:
+      - rasa-net
+  # ================================= Actions =================================
+  # Rasa middleware used to connect with external APIs.
+  actions:
+    build:
+      context: .
+      dockerfile: ./docker/actions.Dockerfile
+    restart: unless-stopped
+    ports:
+      - 5055:5055
+    volumes:
+      - ./bot:/bot
+    command: sh -c "python -m rasa_sdk -p 5055 --actions actions"
+    networks:
+      - rasa-net
+
+  # ============================ Webchat Page  =================================
+  # A container to run webchat html page
+  webchat:
+    image: nginx
+    ports:
+      - 5010:80
+    volumes:
+      - ./modules/webchat:/usr/share/nginx/html
+
+  # ============================ Telegram Bot =================================
+  # Specific Rasa bot integrated with Telegram.
+  bot-telegram:
+      build:
+        context: .
+        dockerfile: ./docker/bot.Dockerfile
+      volumes:
+        - ./bot/:/bot/
+      env_file:
+        - env/bot-telegram.env
+      ports:
+        - 5005:5005
+      command: sh -c "make telegram"
+      networks:
+        - rasa-net
+
+  # ============================ Database =================================
+  mysqldb:
+      image: mysql
+      container_name: mysqldb
+      restart: always
+      environment:
+        - MYSQL_ROOT_PASSWORD=root
+      volumes:
+        - mysql-volume:/var/lib/mysql:rw
+        - ./mysql:/docker-entrypoint-initdb.d
+      ports:
+        - 3306:3306
+      networks:
+        - rasa-net
+
+  # ============================ Backup =================================
+  backup-mysqldb:
+      image: databack/mysql-backup
+      container_name: Backup
+      restart: always
+      volumes:
+        - ./backups:/db:rw #./backups é a pasta local que vai receber o .tgz e /db é a pasta interna do container Backup
+      environment:
+        - DB_DUMP_TARGET=/db #/db é a pasta interna do container Backup
+        - DB_USER=root
+        - DB_PASS=root
+        - DB_DUMP_FREQ=3 #Backup a cada 3min
+        - DB_DUMP_BEGIN=+1 #Bakckup se inicia a partir do 1min do container up
+        - DB_SERVER=mysqldb #Nome do service docker-compose que será acessado
+        - DB_NAMES=Cisam #Nome do banco
+      networks:
+        - rasa-net
+
+networks:
+  rasa-net:
+    driver: bridge
+
+volumes:
+  mysql-volume:
+
+
+

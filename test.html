@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="flex flex-col justify-center items-center">
+        <h1>AudioBot</h1>
+        <p>Fale com o bot</p>
+        <p id="texto" class="border h-64 w-25 m-2 p-2 w-96 rounded border-8 mb-8">....</p>
+    
+        <button id="record" class="bg-purple-200 mx-2 p-2  rounded-full shadow-lg mb-8">Gravar</button>
+        <p id="transcript"></p>
+        </div>
+    
+        <script>
+            var recordButton = document.getElementById('record');
+            var transcript = document.getElementById('transcript');
+            
+            window.SpeechRecognition = window.SpeechRecognition
+                            || window.webkitSpeechRecognition;
+            var recognition = new webkitSpeechRecognition();
+            const synth = window.speechSynthesis; // chamada SpeechSynthesis API[]
+            recognition.lang = "pt_BR";
+            recognition.continuous = true;  
+            recognition.interimResults = true;
+            recordButton.addEventListener('click', function() {
+                recognition.start();
+            });
+            recognition.onresult = function(event) {
+                var interimTranscript = '';
+                for (var i = event.resultIndex; i < event.results.length; i++) {
+                    var transcriptText = event.results[i][0].transcript;
+                    if (event.results[i].isFinal) {
+                        sendToServer(transcriptText);
+                        recognition.stop();
+                    } else {
+                        interimTranscript += transcriptText;
+                        console.log(interimTranscript);
+                    }
+                }
+            };
+    </script>
+</body>
+</html>
