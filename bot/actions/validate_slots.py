@@ -13,6 +13,7 @@ from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.types import DomainDict
 from rasa_sdk.events import AllSlotsReset
 from rasa_sdk.events import SlotSet
+
 tentativas_cpf = 0
 menu = 0
 tipo_agendamento = ''
@@ -76,7 +77,6 @@ class ValidateCisamForm(FormValidationAction):
             msg = 'nao tenho'
             dispatcher.utter_message(response="utter_sem_prontuario_2_sim")
             return {"user_cpf": msg, "requested_slot": None}
-        
         
         # inseriu o cpf, passou pelo regex e esta valido
         else:
@@ -165,6 +165,7 @@ class ValidateCisamForm(FormValidationAction):
         if slot_value == 'sair':
             dispatcher.utter_message(response="utter_terminar")
             return {"cenario_dois_menu": slot_value, "controle": 2}
+        
         # continuar desenvolvendo a lógica ============= <
 
         elif menu != 0 and slot_value == 'continuar':
@@ -179,11 +180,12 @@ class ValidateCisamForm(FormValidationAction):
             dispatcher.utter_message(response="utter_repro_um")
             tipo_agendamento = 'Reproducao Humana'
             return {"cenario_dois_menu": None}
-        elif menu == 1 and slot_value == 'número um b':
+        elif menu == 1 and slot_value == 'número um b' or menu == 1 and slot_value== 'número 1 b' or menu == 1 and slot_value == 'número umb' or menu == 1 and slot_value == 'número 1B':
             dispatcher.utter_message(response="utter_repro_dois")
             tipo_agendamento = 'Laqueadura tubária'
             return {"cenario_dois_menu": None}
-        elif menu == 1 and slot_value == 'número um c':
+        
+        elif menu == 1 and slot_value == 'número um c' or menu == 1 and slot_value== 'número 1 c' or menu == 1 and slot_value == 'número umc' or menu == 1 and slot_value == 'número 1C':
             dispatcher.utter_message(response="utter_repro_tres")
             tipo_agendamento = 'Teleconsulta para métodos contraceptivos'
             return {"cenario_dois_menu": None}
@@ -192,11 +194,11 @@ class ValidateCisamForm(FormValidationAction):
             menu = 2
             dispatcher.utter_message(response="utter_cenario_dois_menu_resp_dois")
             return {"cenario_dois_menu": None}
-        elif menu == 2 and slot_value == 'número dois a':
+        elif menu == 2 and slot_value == 'número dois a' or menu == 2 and slot_value== 'número 2 a' or menu == 2 and slot_value == 'número doisa' or menu == 2 and slot_value == 'número 2A':
             dispatcher.utter_message(response="utter_dent_um")
             tipo_agendamento = 'Dentista da FOP'
             return {"cenario_dois_menu": None}
-        elif menu == 2 and slot_value == 'número dois b':
+        elif menu == 2 and slot_value == 'número dois b' or menu == 2 and slot_value== 'número 2 b' or menu == 2 and slot_value == 'número doisb' or menu == 2 and slot_value == 'número 2B':
             dispatcher.utter_message(response="utter_dent_dois")
             tipo_agendamento = 'Dentista do Cisam'
             return {"cenario_dois_menu": None}
@@ -205,11 +207,11 @@ class ValidateCisamForm(FormValidationAction):
             menu = 3
             dispatcher.utter_message(response="utter_cenario_dois_menu_resp_tres")
             return {"cenario_dois_menu": None}
-        elif menu == 3 and slot_value == 'número três a':
+        elif menu == 3 and slot_value == 'número três a' or menu == 3 and slot_value== 'número 3 a' or menu == 3 and slot_value == 'número trêsa' or menu == 3 and slot_value == 'número 3A':
             dispatcher.utter_message(response="utter_histe_um")
             tipo_agendamento = 'Exame histeroscopia diagnóstica'
             return {"cenario_dois_menu": None}
-        elif menu == 3 and slot_value == 'número três b':
+        elif menu == 3 and slot_value == 'número três b' or menu == 3 and slot_value== 'número 3 b' or menu == 3 and slot_value == 'número trêsb' or menu == 3 and slot_value == 'número 3B':
             dispatcher.utter_message(response="utter_histe_dois")
             tipo_agendamento = 'Exame histeroscopia diagnóstica'
             return {"cenario_dois_menu": None}
@@ -219,41 +221,41 @@ class ValidateCisamForm(FormValidationAction):
             menu = 4
             dispatcher.utter_message(response="utter_cenario_dois_menu_resp_quatro")
             return {"cenario_dois_menu": None}
-        elif menu == 4 and slot_value == 'número quatro a':
+        elif menu == 4 and slot_value == 'número quatro a' or menu == 4 and slot_value== 'número 4 a' or menu == 4 and slot_value == 'número quatroa' or menu == 4 and slot_value == 'número 4A':
             dispatcher.utter_message(response="utter_gine_um")
             tipo_agendamento = 'Endocrinologia Ginecológica'
             return {"cenario_dois_menu": None}
-        elif menu == 4 and slot_value == 'número quatro b':
+        elif menu == 4 and slot_value == 'número quatro b' or menu == 4 and slot_value== 'número 4 b' or menu == 4 and slot_value == 'número quatrob' or menu == 4 and slot_value == 'número 4B':
             dispatcher.utter_message(response="utter_gine_dois")
             tipo_agendamento = 'Endometriose'
             return {"cenario_dois_menu": None}
-        elif menu == 4 and slot_value == 'número quatro c':
+        elif menu == 4 and slot_value == 'número quatro c' or menu == 4 and slot_value== 'número 4 c' or menu == 4 and slot_value == 'número quatroc' or menu == 4 and slot_value == 'número 4C':
             dispatcher.utter_message(response="utter_gine_tres")
             tipo_agendamento = 'Mastologia'
             return {"cenario_dois_menu": None}
-        elif menu == 4 and slot_value == 'quatro d':
+        elif menu == 4 and slot_value == 'número quatro d' or menu == 4 and slot_value== 'número 4 d' or menu == 4 and slot_value == 'número quatrod' or menu == 4 and slot_value == 'número 4D':
             dispatcher.utter_message(response="utter_gine_quatro")
             tipo_agendamento = 'Climatério'
             return {"cenario_dois_menu": None}
-        elif menu == 4 and slot_value == 'quatro e':
+        elif menu == 4 and slot_value == 'número quatro e' or menu == 4 and slot_value== 'número 4 e' or menu == 4 and slot_value == 'número quatroe' or menu == 4 and slot_value == 'número 4E':
             dispatcher.utter_message(response="utter_gine_cinco")
             tipo_agendamento = 'Ginecologia Geral'
             return {"cenario_dois_menu": None}
 
         # escolhas do menu ginecologia queixas
-        elif menu == 4 and slot_value == 'quatro aa':
+        elif menu == 4 and slot_value == 'quatro aa' or menu == 4 and slot_value== 'número 4 aa' or menu == 4 and slot_value == 'número quatroaa' or menu == 4 and slot_value == 'número 4AA':
             dispatcher.utter_message(response="utter_gine_confirma")
             return {"cenario_dois_menu": None, "queixa": 'Dor/Sangramento/Corrimento/Prurido'}
-        elif menu == 4 and slot_value == 'quatro ab':
+        elif menu == 4 and slot_value == 'quatro ab' or menu == 4 and slot_value== 'número 4 ab' or menu == 4 and slot_value == 'número quatroab' or menu == 4 and slot_value == 'número 4AB':
             dispatcher.utter_message(response="utter_gine_confirma")
             return {"cenario_dois_menu": None, "queixa": 'Mioma/Cisto/Pólipo'}
-        elif menu == 4 and slot_value == 'quatro ac':
+        elif menu == 4 and slot_value == 'quatro ac' or menu == 4 and slot_value== 'número 4 ac' or menu == 4 and slot_value == 'número quatroac' or menu == 4 and slot_value == 'número 4AC':
             dispatcher.utter_message(response="utter_gine_confirma")
             return {"cenario_dois_menu": None, "queixa": 'Resultado/Solicitação de exames'}
-        elif menu == 4 and slot_value == 'quatro ad':
+        elif menu == 4 and slot_value == 'quatro ad' or menu == 4 and slot_value== 'número 4 ad' or menu == 4 and slot_value == 'número quatroad' or menu == 4 and slot_value == 'número 4AD':
             dispatcher.utter_message(response="utter_gine_confirma")
             return {"cenario_dois_menu": None, "queixa":'Sem queixa, consulta de rotina'}
-        elif menu == 4 and slot_value == 'quatro ae':
+        elif menu == 4 and slot_value == 'quatro ae' or menu == 4 and slot_value== 'número 4 ae' or menu == 4 and slot_value == 'número quatroae' or menu == 4 and slot_value == 'número 4AE':
             dispatcher.utter_message(response="utter_gine_confirma")
             return {"cenario_dois_menu": None, "queixa": 'Nenhuma das opções'}
 
@@ -261,11 +263,11 @@ class ValidateCisamForm(FormValidationAction):
             menu = 5
             dispatcher.utter_message(response="utter_cenario_dois_menu_resp_cinco")
             return {"cenario_dois_menu": None}
-        elif menu == 5 and slot_value == 'cinco a':
+        elif menu == 5 and slot_value == 'cinco a' or menu == 5 and slot_value== 'número 5 a' or menu == 5 and slot_value == 'número cincoa' or menu == 5 and slot_value == 'número 5A':
             dispatcher.utter_message(response="utter_cirur_um")
             tipo_agendamento = 'Cirurgia geral em Ginecologia'
             return {"cenario_dois_menu": None}
-        elif menu == 5 and slot_value == 'cinco b':
+        elif menu == 5 and slot_value == 'cinco b' or menu == 5 and slot_value== 'número 5 b' or menu == 5 and slot_value == 'número cincob' or menu == 5 and slot_value == 'número 5B':
             dispatcher.utter_message(response="utter_cirur_dois")
             tipo_agendamento = 'Cirurgia de Reversão Tubária'
             return {"cenario_dois_menu": None}
@@ -274,11 +276,11 @@ class ValidateCisamForm(FormValidationAction):
             menu = 6
             dispatcher.utter_message(response="utter_cenario_dois_menu_resp_seis")
             return {"cenario_dois_menu": None}
-        elif menu == 6 and slot_value == 'seis a':
+        elif menu == 6 and slot_value == 'seis a' or menu == 6 and slot_value== 'número 6 a' or menu == 6 and slot_value == 'número seisa' or menu == 6 and slot_value == 'número 6A':
             dispatcher.utter_message(response="utter_derma_um")
             tipo_agendamento = 'Dermatologia - Primeira Consulta'
             return {"cenario_dois_menu": None}
-        elif menu == 6 and slot_value == 'seis b':
+        elif menu == 6 and slot_value == 'seis b' or menu == 6 and slot_value== 'número 6 b' or menu == 6 and slot_value == 'número seisb' or menu == 6 and slot_value == 'número 6B':
             dispatcher.utter_message(response="utter_derma_dois")
             tipo_agendamento = 'Dermatologia - Consulta de Retorno'
             return {"cenario_dois_menu": None}
@@ -301,7 +303,7 @@ class ValidateCisamFormDois(FormValidationAction):
         """Validate user_nome_completo"""
         # volta pro dialogo anterior
         
-        if len(slot_value) >= 2 and not slot_value.isdigit():
+        if len(slot_value) >= 10 and not slot_value.isdigit():
             dispatcher.utter_message(response="utter_user_data_nasc")
             return {"user_nome_completo": slot_value}
         else:
@@ -317,7 +319,7 @@ class ValidateCisamFormDois(FormValidationAction):
     ) -> Dict[Text, Any]:
         """Validate user_data_nasc"""
         # volta pro dialogo anterior
-        if slot_value == '#':
+        if slot_value == 'voltar':
             dispatcher.utter_message(response="utter_user_nome_completo")
             return {"user_data_nasc": None, "user_nome_completo": None}
         else:
@@ -381,7 +383,7 @@ class ValidateCisamFormDois(FormValidationAction):
         global menu
         """Validate cenario_dois_menu"""
         # volta pro dialogo volta pro inicio do menu
-        if slot_value == 'voltar':
+        if slot_value == 'menu':
             menu = 0
             dispatcher.utter_message(response="utter_cenario_dois_menu_prontuario")
             return {"cenario_dois_menu": None}
@@ -398,6 +400,7 @@ class ValidateCisamFormDois(FormValidationAction):
         if slot_value == 'sair':
             dispatcher.utter_message(response="utter_terminar")
             return {"cenario_dois_menu": slot_value, "controle": 2}
+        
         # continuar desenvolvendo a lógica ============= <
 
         elif menu != 0 and slot_value == 'continuar':
@@ -408,15 +411,16 @@ class ValidateCisamFormDois(FormValidationAction):
             menu = 1
             dispatcher.utter_message(response="utter_cenario_dois_menu_resp_um")
             return {"cenario_dois_menu": None}
-        elif menu == 1 and slot_value == 'um a' or menu == 1 and slot_value== '1a' or menu == 1 and slot_value== '1A' or menu == 1 and slot_value== '1 a' or menu == 1 and slot_value== 'uma':
+        elif menu == 1 and slot_value == 'número um a' or menu == 1 and slot_value== 'número 1 a' or menu == 1 and slot_value == 'número uma' or menu == 1 and slot_value == 'número 1A':
             dispatcher.utter_message(response="utter_repro_um")
             tipo_agendamento = 'Reproducao Humana'
             return {"cenario_dois_menu": None}
-        elif menu == 1 and slot_value == 'um b':
+        elif menu == 1 and slot_value == 'número um b' or menu == 1 and slot_value== 'número 1 b' or menu == 1 and slot_value == 'número umb' or menu == 1 and slot_value == 'número 1B':
             dispatcher.utter_message(response="utter_repro_dois")
             tipo_agendamento = 'Laqueadura tubária'
             return {"cenario_dois_menu": None}
-        elif menu == 1 and slot_value == 'um c':
+        
+        elif menu == 1 and slot_value == 'número um c' or menu == 1 and slot_value== 'número 1 c' or menu == 1 and slot_value == 'número umc' or menu == 1 and slot_value == 'número 1C':
             dispatcher.utter_message(response="utter_repro_tres")
             tipo_agendamento = 'Teleconsulta para métodos contraceptivos'
             return {"cenario_dois_menu": None}
@@ -425,11 +429,11 @@ class ValidateCisamFormDois(FormValidationAction):
             menu = 2
             dispatcher.utter_message(response="utter_cenario_dois_menu_resp_dois")
             return {"cenario_dois_menu": None}
-        elif menu == 2 and slot_value == 'dois a':
+        elif menu == 2 and slot_value == 'número dois a' or menu == 2 and slot_value== 'número 2 a' or menu == 2 and slot_value == 'número doisa' or menu == 2 and slot_value == 'número 2A':
             dispatcher.utter_message(response="utter_dent_um")
             tipo_agendamento = 'Dentista da FOP'
             return {"cenario_dois_menu": None}
-        elif menu == 2 and slot_value == 'dois b':
+        elif menu == 2 and slot_value == 'número dois b' or menu == 2 and slot_value== 'número 2 b' or menu == 2 and slot_value == 'número doisb' or menu == 2 and slot_value == 'número 2B':
             dispatcher.utter_message(response="utter_dent_dois")
             tipo_agendamento = 'Dentista do Cisam'
             return {"cenario_dois_menu": None}
@@ -438,11 +442,11 @@ class ValidateCisamFormDois(FormValidationAction):
             menu = 3
             dispatcher.utter_message(response="utter_cenario_dois_menu_resp_tres")
             return {"cenario_dois_menu": None}
-        elif menu == 3 and slot_value == 'três a':
+        elif menu == 3 and slot_value == 'número três a' or menu == 3 and slot_value== 'número 3 a' or menu == 3 and slot_value == 'número trêsa' or menu == 3 and slot_value == 'número 3A':
             dispatcher.utter_message(response="utter_histe_um")
             tipo_agendamento = 'Exame histeroscopia diagnóstica'
             return {"cenario_dois_menu": None}
-        elif menu == 3 and slot_value == 'três b':
+        elif menu == 3 and slot_value == 'número três b' or menu == 3 and slot_value== 'número 3 b' or menu == 3 and slot_value == 'número trêsb' or menu == 3 and slot_value == 'número 3B':
             dispatcher.utter_message(response="utter_histe_dois")
             tipo_agendamento = 'Exame histeroscopia diagnóstica'
             return {"cenario_dois_menu": None}
@@ -452,41 +456,41 @@ class ValidateCisamFormDois(FormValidationAction):
             menu = 4
             dispatcher.utter_message(response="utter_cenario_dois_menu_resp_quatro")
             return {"cenario_dois_menu": None}
-        elif menu == 4 and slot_value == 'quatro a':
+        elif menu == 4 and slot_value == 'número quatro a' or menu == 4 and slot_value== 'número 4 a' or menu == 4 and slot_value == 'número quatroa' or menu == 4 and slot_value == 'número 4A':
             dispatcher.utter_message(response="utter_gine_um")
             tipo_agendamento = 'Endocrinologia Ginecológica'
             return {"cenario_dois_menu": None}
-        elif menu == 4 and slot_value == 'quatro b':
+        elif menu == 4 and slot_value == 'número quatro b' or menu == 4 and slot_value== 'número 4 b' or menu == 4 and slot_value == 'número quatrob' or menu == 4 and slot_value == 'número 4B':
             dispatcher.utter_message(response="utter_gine_dois")
             tipo_agendamento = 'Endometriose'
             return {"cenario_dois_menu": None}
-        elif menu == 4 and slot_value == 'quatro c':
+        elif menu == 4 and slot_value == 'número quatro c' or menu == 4 and slot_value== 'número 4 c' or menu == 4 and slot_value == 'número quatroc' or menu == 4 and slot_value == 'número 4C':
             dispatcher.utter_message(response="utter_gine_tres")
             tipo_agendamento = 'Mastologia'
             return {"cenario_dois_menu": None}
-        elif menu == 4 and slot_value == 'quatro d':
+        elif menu == 4 and slot_value == 'número quatro d' or menu == 4 and slot_value== 'número 4 d' or menu == 4 and slot_value == 'número quatrod' or menu == 4 and slot_value == 'número 4D':
             dispatcher.utter_message(response="utter_gine_quatro")
             tipo_agendamento = 'Climatério'
             return {"cenario_dois_menu": None}
-        elif menu == 4 and slot_value == 'quatro e':
+        elif menu == 4 and slot_value == 'número quatro e' or menu == 4 and slot_value== 'número 4 e' or menu == 4 and slot_value == 'número quatroe' or menu == 4 and slot_value == 'número 4E':
             dispatcher.utter_message(response="utter_gine_cinco")
             tipo_agendamento = 'Ginecologia Geral'
             return {"cenario_dois_menu": None}
 
         # escolhas do menu ginecologia queixas
-        elif menu == 4 and slot_value == 'quatro aa':
+        elif menu == 4 and slot_value == 'número quatro aa' or menu == 4 and slot_value== 'número 4 aa' or menu == 4 and slot_value == 'número quatroaa' or menu == 4 and slot_value == 'número 4AA':
             dispatcher.utter_message(response="utter_gine_confirma")
             return {"cenario_dois_menu": None, "queixa": 'Dor/Sangramento/Corrimento/Prurido'}
-        elif menu == 4 and slot_value == 'quatro ab':
+        elif menu == 4 and slot_value == 'número quatro ab' or menu == 4 and slot_value== 'número 4 ab' or menu == 4 and slot_value == 'número quatroab' or menu == 4 and slot_value == 'número 4AB':
             dispatcher.utter_message(response="utter_gine_confirma")
             return {"cenario_dois_menu": None, "queixa": 'Mioma/Cisto/Pólipo'}
-        elif menu == 4 and slot_value == 'quatro ac':
+        elif menu == 4 and slot_value == 'número quatro ac' or menu == 4 and slot_value== 'número 4 ac' or menu == 4 and slot_value == 'número quatroac' or menu == 4 and slot_value == 'número 4AC':
             dispatcher.utter_message(response="utter_gine_confirma")
             return {"cenario_dois_menu": None, "queixa": 'Resultado/Solicitação de exames'}
-        elif menu == 4 and slot_value == 'quatro ad':
+        elif menu == 4 and slot_value == 'número quatro ad' or menu == 4 and slot_value== 'número 4 ad' or menu == 4 and slot_value == 'número quatroad' or menu == 4 and slot_value == 'número 4AD':
             dispatcher.utter_message(response="utter_gine_confirma")
             return {"cenario_dois_menu": None, "queixa":'Sem queixa, consulta de rotina'}
-        elif menu == 4 and slot_value == 'quatro ae':
+        elif menu == 4 and slot_value == 'número quatro ae' or menu == 4 and slot_value== 'número 4 ae' or menu == 4 and slot_value == 'número quatroae' or menu == 4 and slot_value == 'número 4AE':
             dispatcher.utter_message(response="utter_gine_confirma")
             return {"cenario_dois_menu": None, "queixa": 'Nenhuma das opções'}
 
@@ -494,11 +498,11 @@ class ValidateCisamFormDois(FormValidationAction):
             menu = 5
             dispatcher.utter_message(response="utter_cenario_dois_menu_resp_cinco")
             return {"cenario_dois_menu": None}
-        elif menu == 5 and slot_value == 'cinco a':
+        elif menu == 5 and slot_value == 'cinco a' or menu == 5 and slot_value== 'número 5 a' or menu == 5 and slot_value == 'número cincoa' or menu == 5 and slot_value == 'número 5A':
             dispatcher.utter_message(response="utter_cirur_um")
             tipo_agendamento = 'Cirurgia geral em Ginecologia'
             return {"cenario_dois_menu": None}
-        elif menu == 5 and slot_value == 'cinco b':
+        elif menu == 5 and slot_value == 'cinco b' or menu == 5 and slot_value== 'número 5 b' or menu == 5 and slot_value == 'número cincob' or menu == 5 and slot_value == 'número 5B':
             dispatcher.utter_message(response="utter_cirur_dois")
             tipo_agendamento = 'Cirurgia de Reversão Tubária'
             return {"cenario_dois_menu": None}
@@ -507,11 +511,11 @@ class ValidateCisamFormDois(FormValidationAction):
             menu = 6
             dispatcher.utter_message(response="utter_cenario_dois_menu_resp_seis")
             return {"cenario_dois_menu": None}
-        elif menu == 6 and slot_value == 'seis a':
+        elif menu == 6 and slot_value == 'seis a' or menu == 6 and slot_value== 'número 6 a' or menu == 6 and slot_value == 'número seisa' or menu == 6 and slot_value == 'número 6A':
             dispatcher.utter_message(response="utter_derma_um")
             tipo_agendamento = 'Dermatologia - Primeira Consulta'
             return {"cenario_dois_menu": None}
-        elif menu == 6 and slot_value == 'seis b':
+        elif menu == 6 and slot_value == 'seis b' or menu == 6 and slot_value== 'número 6 b' or menu == 6 and slot_value == 'número seisb' or menu == 6 and slot_value == 'número 6B':
             dispatcher.utter_message(response="utter_derma_dois")
             tipo_agendamento = 'Dermatologia - Consulta de Retorno'
             return {"cenario_dois_menu": None}
@@ -519,7 +523,6 @@ class ValidateCisamFormDois(FormValidationAction):
         else:
             dispatcher.utter_message(response="utter_cenario_dois_menu_resp_errado")
             return {"cenario_dois_menu": None}
-
 
 #============================= Ação resetar todos os slots=======================
 # Aqui os slots são resetados
