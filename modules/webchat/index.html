@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AudioBot</title>
+</head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+<link rel="stylesheet" href="./style.css">
+
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<body>
+    <div class="container">
+    <div class="flex flex-col justify-center items-center h-auto border-8">
+    <h1>AudioBot</h1>
+    <p>Fale com o bot</p>
+    <p id="texto" class="border h-20 m-2 p-2 w-96 rounded border-8 mb-8 h-auto">....</p>
+
+    <button id="record" class="bg-purple-200 mx-2 p-2  rounded-full shadow-lg mb-8"><i class="fas fa-microphone"></i>
+      Aperte para falar</button>
+    <p id="transcript"></p>
+    </div>
+
+    <script>
+        var recordButton = document.getElementById('record');
+        var transcript = document.getElementById('transcript');
+        transcript.style.fontWeight = "bold";
+        transcript.style.fontFamily = "Arial";
+        window.SpeechRecognition = window.SpeechRecognition
+                        || window.webkitSpeechRecognition;
+        var recognition = new webkitSpeechRecognition();
+        const synth = window.speechSynthesis; // chamada SpeechSynthesis API[]
+        recognition.lang = "pt-BR";
+        recognition.continuous = true;  
+        recognition.interimResults = true;
+        let isRecording = false;
+
+        recordButton.addEventListener('click', () => {
+          if (isRecording) {
+            recognition.stop();
+            recordButton.innerHTML = '<i class="fas fa-microphone"></i> Aperte para falar';
+
+          } else {
+            recognition.start();
+              recordButton.innerHTML = '<i class="fa-solid fa-pause"></i> Parar';
+          }
+          isRecording = !isRecording;
+        });
+       // recordButton.addEventListener('click', function() {
+          //  recognition.start();
+        //});
+        recognition.onresult =  (event) => {
+            var interimTranscript = '';
+            for (var i = event.resultIndex; i < event.results.length; i++) {
+                var transcriptText = event.results[i][0].transcript;
+                if (event.results[i].isFinal) {
+                    sendToServer(transcriptText);
+                    recognition.stop();
+                } else {
+                    interimTranscript += transcriptText;
+                    console.log("Você disse:", interimTranscript);
+                }
+            }
+        };
+
+        function sendToServer(transcriptText) {
+            fetch('http://localhost:5007/webhooks/rest/webhook', {
+                method: "POST",
+                body: JSON.stringify({"message": transcriptText}),
+                headers: {"Content-type": "application/json; charset=UTF-8"}
+            })
+            .then(response => response.json())
+            .then(data => {
+                //console.log("Bot disse: ");
+                let botMessages = "";
+                for (let i of data) {
+                    let botMessage = i.text;
+                    console.log(botMessage);
+                    botMessages += botMessage + " ";
+                }            
+                texto.innerHTML = botMessages;
+                var utter = new SpeechSynthesisUtterance(botMessages);
+                var voices = speechSynthesis.getVoices();
+                var selectedVoice = voices.find(function(voice) {
+                    return voice.lang === 'pt-BR' && voice.name === "Microsoft Maria - Portuguese (Brazil)";
+                });
+                if (selectedVoice) {
+                    utter.voice = selectedVoice;
+                    synth.speak(utter);
+                } else {
+                    console.error('Selected voice not available.');
+                }
+            })
+            .catch(error => {
+                console.error(error);
+                texto.innerHTML = "Desculpe, não foi possível obter resposta do servidor.";
+            });
+        }
+    </script>
+  </div>
+</body>
+<footer>
+  <nav>
+    <ul>
+      <li><a href="#">Clau audio e chatbot</a></li>
+      <li><a href="#">Sobre</a></li>
+      <li><a href="#">Contato</a></li>
+    </ul>
+  </nav>
+</footer>
+</html>

@@ -1,0 +1,12 @@
+# Configuração para ambiente local
+action_endpoint:
+  url: "http://localhost:5055/webhook"
+
+# tracker_store:
+#   type: sql
+#   dialect: "mysql"
+#   url: mysqldb
+#   port: 3306
+#   username: root
+#   password: root
+#   db: Cisam
