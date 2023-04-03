@@ -243,19 +243,19 @@ class ValidateCisamForm(FormValidationAction):
             return {"cenario_dois_menu": None}
 
         # escolhas do menu ginecologia queixas
-        elif menu == 4 and slot_value == 'quatro aa' or menu == 4 and slot_value== 'número 4 aa' or menu == 4 and slot_value == 'número quatroaa' or menu == 4 and slot_value == 'número 4AA':
+        elif menu == 4 and slot_value == 'número quatro aa' or menu == 4 and slot_value== 'número 4 aa' or menu == 4 and slot_value == 'número quatroaa' or menu == 4 and slot_value == 'número 4AA':
             dispatcher.utter_message(response="utter_gine_confirma")
             return {"cenario_dois_menu": None, "queixa": 'Dor/Sangramento/Corrimento/Prurido'}
-        elif menu == 4 and slot_value == 'quatro ab' or menu == 4 and slot_value== 'número 4 ab' or menu == 4 and slot_value == 'número quatroab' or menu == 4 and slot_value == 'número 4AB':
+        elif menu == 4 and slot_value == 'número quatro ab' or menu == 4 and slot_value== 'número 4 ab' or menu == 4 and slot_value == 'número quatroab' or menu == 4 and slot_value == 'número 4AB':
             dispatcher.utter_message(response="utter_gine_confirma")
             return {"cenario_dois_menu": None, "queixa": 'Mioma/Cisto/Pólipo'}
-        elif menu == 4 and slot_value == 'quatro ac' or menu == 4 and slot_value== 'número 4 ac' or menu == 4 and slot_value == 'número quatroac' or menu == 4 and slot_value == 'número 4AC':
+        elif menu == 4 and slot_value == 'número quatro ac' or menu == 4 and slot_value== 'número 4 ac' or menu == 4 and slot_value == 'número quatroac' or menu == 4 and slot_value == 'número 4AC':
             dispatcher.utter_message(response="utter_gine_confirma")
             return {"cenario_dois_menu": None, "queixa": 'Resultado/Solicitação de exames'}
-        elif menu == 4 and slot_value == 'quatro ad' or menu == 4 and slot_value== 'número 4 ad' or menu == 4 and slot_value == 'número quatroad' or menu == 4 and slot_value == 'número 4AD':
+        elif menu == 4 and slot_value == 'número quatro ad' or menu == 4 and slot_value== 'número 4 ad' or menu == 4 and slot_value == 'número quatroad' or menu == 4 and slot_value == 'número 4AD':
             dispatcher.utter_message(response="utter_gine_confirma")
             return {"cenario_dois_menu": None, "queixa":'Sem queixa, consulta de rotina'}
-        elif menu == 4 and slot_value == 'quatro ae' or menu == 4 and slot_value== 'número 4 ae' or menu == 4 and slot_value == 'número quatroae' or menu == 4 and slot_value == 'número 4AE':
+        elif menu == 4 and slot_value == 'número quatro ae' or menu == 4 and slot_value== 'número 4 ae' or menu == 4 and slot_value == 'número quatroae' or menu == 4 and slot_value == 'número 4AE':
             dispatcher.utter_message(response="utter_gine_confirma")
             return {"cenario_dois_menu": None, "queixa": 'Nenhuma das opções'}
 
@@ -263,11 +263,11 @@ class ValidateCisamForm(FormValidationAction):
             menu = 5
             dispatcher.utter_message(response="utter_cenario_dois_menu_resp_cinco")
             return {"cenario_dois_menu": None}
-        elif menu == 5 and slot_value == 'cinco a' or menu == 5 and slot_value== 'número 5 a' or menu == 5 and slot_value == 'número cincoa' or menu == 5 and slot_value == 'número 5A':
+        elif menu == 5 and slot_value == 'número cinco a' or menu == 5 and slot_value== 'número 5 a' or menu == 5 and slot_value == 'número cincoa' or menu == 5 and slot_value == 'número 5A':
             dispatcher.utter_message(response="utter_cirur_um")
             tipo_agendamento = 'Cirurgia geral em Ginecologia'
             return {"cenario_dois_menu": None}
-        elif menu == 5 and slot_value == 'cinco b' or menu == 5 and slot_value== 'número 5 b' or menu == 5 and slot_value == 'número cincob' or menu == 5 and slot_value == 'número 5B':
+        elif menu == 5 and slot_value == 'número cinco b' or menu == 5 and slot_value== 'número 5 b' or menu == 5 and slot_value == 'número cincob' or menu == 5 and slot_value == 'número 5B':
             dispatcher.utter_message(response="utter_cirur_dois")
             tipo_agendamento = 'Cirurgia de Reversão Tubária'
             return {"cenario_dois_menu": None}
@@ -276,11 +276,11 @@ class ValidateCisamForm(FormValidationAction):
             menu = 6
             dispatcher.utter_message(response="utter_cenario_dois_menu_resp_seis")
             return {"cenario_dois_menu": None}
-        elif menu == 6 and slot_value == 'seis a' or menu == 6 and slot_value== 'número 6 a' or menu == 6 and slot_value == 'número seisa' or menu == 6 and slot_value == 'número 6A':
+        elif menu == 6 and slot_value == 'número seis a' or menu == 6 and slot_value== 'número 6 a' or menu == 6 and slot_value == 'número seisa' or menu == 6 and slot_value == 'número 6A':
             dispatcher.utter_message(response="utter_derma_um")
             tipo_agendamento = 'Dermatologia - Primeira Consulta'
             return {"cenario_dois_menu": None}
-        elif menu == 6 and slot_value == 'seis b' or menu == 6 and slot_value== 'número 6 b' or menu == 6 and slot_value == 'número seisb' or menu == 6 and slot_value == 'número 6B':
+        elif menu == 6 and slot_value == 'número seis b' or menu == 6 and slot_value== 'número 6 b' or menu == 6 and slot_value == 'número seisb' or menu == 6 and slot_value == 'número 6B':
             dispatcher.utter_message(response="utter_derma_dois")
             tipo_agendamento = 'Dermatologia - Consulta de Retorno'
             return {"cenario_dois_menu": None}
@@ -602,7 +602,7 @@ class UtilsForm:
 
 
 #========= Conexão com banco de dados ==========================================
-def DataUpdate(lgpd, nome, cpf, telefone, email, sexo, data_nasc):
+def DataUpdate(lgpd, nome, cpf, especialidade):
     '''
     Entrada: dados do formulario
     Envia para o banco de dados: slots preenchidos
@@ -619,7 +619,7 @@ def DataUpdate(lgpd, nome, cpf, telefone, email, sexo, data_nasc):
 
     mycursor = mydb.cursor()
     # codigo sql
-    sql = 'INSERT INTO UserCisam (user_lgpd, user_cpf, user_cpf, user_telefone, user_email, user_sexo, user_data_nasc) VALUES ("{0}","{1}","{2}","{3}","{4}","{5}","{6}");'.format(lgpd, nome, cpf, telefone, email, sexo, data_nasc)
+    sql = 'INSERT INTO tb_AgendaCisamCpf (user_lgpd, user_cpf, user_nome, agendamento) VALUES ("{0}","{1}", "{2}", "{3}");'.format(lgpd,cpf,nome,especialidade)
     mycursor.execute(sql)
     mydb.commit()
     mydb.close()
@@ -639,23 +639,34 @@ class ActionSubmit(Action):
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         controle = tracker.get_slot("controle")
         lgpd = tracker.get_slot("user_lgpd")
-        if controle == 1 or controle == '1':
+        cpf =  tracker.get_slot("user_cpf")
+        nome = tracker.get_slot("user_nome")
+        especialidade = tracker.get_slot("cenario_dois_menu")
+
+        nome_completo = tracker.get_slot("user_nome_completo")
+        data_nasc = tracker.get_slot("user_data_nasc")
+        telefone = tracker.get_slot("user_telefone")
+        email = tracker.get_slot("user_email")
+
+        if controle == 1 and cpf != 'nao tenho' or controle == '1' and cpf != 'nao tenho':
             try:
                 dispatcher.utter_message(text="Enviando para o DB")
-                
-                # lgpd = tracker.get_slot("user_lgpd")
-                # nome =  tracker.get_slot("user_cpf")
-                # cpf = tracker.get_slot("user_cpf")
-                # telefone = tracker.get_slot("user_telefone")
-                # email = tracker.get_slot("user_email")
-                # sexo = tracker.get_slot("user_sexo")
-                # data_nasc = tracker.get_slot("user_data_nasc")
-
-                # DataUpdate(lgpd, nome, cpf, telefone, email, sexo, data_nasc)
+                DataUpdate(lgpd, nome, cpf, especialidade)
                 return [AllSlotsReset()]
                 #==============================================================
             except Exception as erro:
                dispatcher.utter_message(text=erro)
+               return [AllSlotsReset()]
+                #==============================================================
+        elif controle == 1 and cpf == 'nao tenho' or controle == '1' and cpf == 'nao tenho':
+            try:
+                dispatcher.utter_message(text="Enviando para o DB 2")
+                # DataUpdate(lgpd, nome, cpf, especialidade)
+                return [AllSlotsReset()]
+                #==============================================================
+            except Exception as erro:
+               dispatcher.utter_message(text=erro)
+               return [AllSlotsReset()]  
         elif controle == 2 or controle == '2':
             return [AllSlotsReset()]
         elif lgpd == 2 or lgpd == '2':
