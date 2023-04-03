@@ -601,7 +601,7 @@ class UtilsForm:
             return False
 
 
-#========= Conexão com banco de dados ==========================================
+#========= Conexões com banco de dados ==========================================
 def DataUpdate(lgpd, nome, cpf, especialidade):
     '''
     Entrada: dados do formulario
@@ -620,6 +620,28 @@ def DataUpdate(lgpd, nome, cpf, especialidade):
     mycursor = mydb.cursor()
     # codigo sql
     sql = 'INSERT INTO tb_AgendaCisamCpf (user_lgpd, user_cpf, user_nome, agendamento) VALUES ("{0}","{1}", "{2}", "{3}");'.format(lgpd,cpf,nome,especialidade)
+    mycursor.execute(sql)
+    mydb.commit()
+    mydb.close()
+
+def DataUpdate2(nome_completo, data_nasc, telefone, email, especialidade):
+    '''
+    Entrada: dados do formulario
+    Envia para o banco de dados: slots preenchidos
+    '''
+    config = {
+                'user': 'root',
+                'password': 'root',
+                'host': 'mysqldb',
+                'port': '3306',
+                'database': 'Cisam',
+                }
+            
+    mydb = mysql.connector.connect(**config)
+
+    mycursor = mydb.cursor()
+    # codigo sql
+    sql = 'INSERT INTO tb_AgendaCisam (nome_completo, data_nasc, telefone, email, agendamento) VALUES ("{0}","{1}", "{2}", "{3}", "{4}" );'.format(nome_completo,data_nasc,telefone,email,especialidade)
     mycursor.execute(sql)
     mydb.commit()
     mydb.close()
@@ -651,8 +673,12 @@ class ActionSubmit(Action):
         if controle == 1 and cpf != 'nao tenho' or controle == '1' and cpf != 'nao tenho':
             try:
                 dispatcher.utter_message(text="Enviando para o DB")
-                DataUpdate(lgpd, nome, cpf, especialidade)
-                return [AllSlotsReset()]
+                try:
+                    DataUpdate(lgpd, nome, cpf, especialidade)
+                    return [AllSlotsReset()]
+                except Exception as erro:
+                    dispatcher.utter_message(text="Erro ao enviar para o banco")
+                    return [AllSlotsReset()]
                 #==============================================================
             except Exception as erro:
                dispatcher.utter_message(text=erro)
@@ -661,8 +687,12 @@ class ActionSubmit(Action):
         elif controle == 1 and cpf == 'nao tenho' or controle == '1' and cpf == 'nao tenho':
             try:
                 dispatcher.utter_message(text="Enviando para o DB 2")
-                # DataUpdate(lgpd, nome, cpf, especialidade)
-                return [AllSlotsReset()]
+                try:
+                    DataUpdate2(nome_completo, data_nasc, telefone, email, especialidade)
+                    return [AllSlotsReset()]
+                except Exception as erro:
+                    dispatcher.utter_message(text="Erro ao enviar para o banco")
+                    return [AllSlotsReset()]
                 #==============================================================
             except Exception as erro:
                dispatcher.utter_message(text=erro)
