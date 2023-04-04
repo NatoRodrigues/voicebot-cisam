@@ -602,7 +602,10 @@ class UtilsForm:
 
 
 #========= Conexões com banco de dados ==========================================
-def DataUpdate(lgpd, nome, cpf, especialidade):
+def DataUpdate(*args):
+    lista = []
+    for arg in args:
+        lista.append(arg)
     '''
     Entrada: dados do formulario
     Envia para o banco de dados: slots preenchidos
@@ -619,10 +622,16 @@ def DataUpdate(lgpd, nome, cpf, especialidade):
 
     mycursor = mydb.cursor()
     # codigo sql
-    sql = 'INSERT INTO tb_AgendaCisamCpf (user_lgpd, user_cpf, user_nome, agendamento) VALUES ("{0}","{1}", "{2}", "{3}");'.format(lgpd,cpf,nome,especialidade)
-    mycursor.execute(sql)
-    mydb.commit()
-    mydb.close()
+    if len(lista) == 4:
+        sql = 'INSERT INTO tb_AgendaCisamCpf (user_lgpd, user_cpf, user_nome, agendamento) VALUES ("{0}","{1}", "{2}", "{3}");'.format(lista[0], lista[1], lista[2], lista[3])
+        mycursor.execute(sql)
+        mydb.commit()
+        mydb.close()
+    elif len(lista) == 5:
+        sql = 'INSERT INTO tb_AgendaCisamCpf (user_lgpd, user_cpf, user_nome, agendamento, user_queixa) VALUES ("{0}","{1}", "{2}", "{3}", "{4}");'.format(lista[0], lista[1], lista[2], lista[3], lista[4])
+        mycursor.execute(sql)
+        mydb.commit()
+        mydb.close()
 
 def DataUpdate2(nome_completo, data_nasc, telefone, email, especialidade):
     '''
@@ -664,7 +673,7 @@ class ActionSubmit(Action):
         cpf =  tracker.get_slot("user_cpf")
         nome = tracker.get_slot("user_nome")
         especialidade = tracker.get_slot("cenario_dois_menu")
-
+        queixa = tracker.get_slot("queixa")
         nome_completo = tracker.get_slot("user_nome_completo")
         data_nasc = tracker.get_slot("user_data_nasc")
         telefone = tracker.get_slot("user_telefone")
@@ -673,12 +682,21 @@ class ActionSubmit(Action):
         if controle == 1 and cpf != 'nao tenho' or controle == '1' and cpf != 'nao tenho':
             try:
                 dispatcher.utter_message(text="Enviando para o DB")
-                try:
-                    DataUpdate(lgpd, nome, cpf, especialidade)
-                    return [AllSlotsReset()]
-                except Exception as erro:
-                    dispatcher.utter_message(text="Erro ao enviar para o banco")
-                    return [AllSlotsReset()]
+                if queixa == None:
+                    try:
+                        DataUpdate(lgpd, cpf, nome, especialidade)
+                        return [AllSlotsReset()]
+                    except Exception as erro:
+                        dispatcher.utter_message(text="Erro ao enviar para o banco")
+                        return [AllSlotsReset()]
+                elif queixa != None:
+                    try:
+                        DataUpdate(lgpd, cpf, nome, especialidade, queixa)
+                        return [AllSlotsReset()]
+                    except Exception as erro:
+                        dispatcher.utter_message(text="Erro ao enviar para o banco")
+                        return [AllSlotsReset()]
+
                 #==============================================================
             except Exception as erro:
                dispatcher.utter_message(text=erro)
