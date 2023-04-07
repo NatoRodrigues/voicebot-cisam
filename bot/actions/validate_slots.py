@@ -498,11 +498,11 @@ class ValidateCisamFormDois(FormValidationAction):
             menu = 5
             dispatcher.utter_message(response="utter_cenario_dois_menu_resp_cinco")
             return {"cenario_dois_menu": None}
-        elif menu == 5 and slot_value == 'cinco a' or menu == 5 and slot_value== 'número 5 a' or menu == 5 and slot_value == 'número cincoa' or menu == 5 and slot_value == 'número 5A':
+        elif menu == 5 and slot_value == 'número cinco a' or menu == 5 and slot_value== 'número 5 a' or menu == 5 and slot_value == 'número cincoa' or menu == 5 and slot_value == 'número 5A':
             dispatcher.utter_message(response="utter_cirur_um")
             tipo_agendamento = 'Cirurgia geral em Ginecologia'
             return {"cenario_dois_menu": None}
-        elif menu == 5 and slot_value == 'cinco b' or menu == 5 and slot_value== 'número 5 b' or menu == 5 and slot_value == 'número cincob' or menu == 5 and slot_value == 'número 5B':
+        elif menu == 5 and slot_value == 'número cinco b' or menu == 5 and slot_value== 'número 5 b' or menu == 5 and slot_value == 'número cincob' or menu == 5 and slot_value == 'número 5B':
             dispatcher.utter_message(response="utter_cirur_dois")
             tipo_agendamento = 'Cirurgia de Reversão Tubária'
             return {"cenario_dois_menu": None}
@@ -511,11 +511,11 @@ class ValidateCisamFormDois(FormValidationAction):
             menu = 6
             dispatcher.utter_message(response="utter_cenario_dois_menu_resp_seis")
             return {"cenario_dois_menu": None}
-        elif menu == 6 and slot_value == 'seis a' or menu == 6 and slot_value== 'número 6 a' or menu == 6 and slot_value == 'número seisa' or menu == 6 and slot_value == 'número 6A':
+        elif menu == 6 and slot_value == 'número seis a' or menu == 6 and slot_value== 'número 6 a' or menu == 6 and slot_value == 'número seisa' or menu == 6 and slot_value == 'número 6A':
             dispatcher.utter_message(response="utter_derma_um")
             tipo_agendamento = 'Dermatologia - Primeira Consulta'
             return {"cenario_dois_menu": None}
-        elif menu == 6 and slot_value == 'seis b' or menu == 6 and slot_value== 'número 6 b' or menu == 6 and slot_value == 'número seisb' or menu == 6 and slot_value == 'número 6B':
+        elif menu == 6 and slot_value == 'número seis b' or menu == 6 and slot_value== 'número 6 b' or menu == 6 and slot_value == 'número seisb' or menu == 6 and slot_value == 'número 6B':
             dispatcher.utter_message(response="utter_derma_dois")
             tipo_agendamento = 'Dermatologia - Consulta de Retorno'
             return {"cenario_dois_menu": None}
@@ -633,7 +633,10 @@ def DataUpdate(*args):
         mydb.commit()
         mydb.close()
 
-def DataUpdate2(nome_completo, data_nasc, telefone, email, especialidade):
+def DataUpdate2(*args):
+    lista = []
+    for arg in args:
+        lista.append(arg)
     '''
     Entrada: dados do formulario
     Envia para o banco de dados: slots preenchidos
@@ -650,10 +653,16 @@ def DataUpdate2(nome_completo, data_nasc, telefone, email, especialidade):
 
     mycursor = mydb.cursor()
     # codigo sql
-    sql = 'INSERT INTO tb_AgendaCisam (nome_completo, data_nasc, telefone, email, agendamento) VALUES ("{0}","{1}", "{2}", "{3}", "{4}" );'.format(nome_completo,data_nasc,telefone,email,especialidade)
-    mycursor.execute(sql)
-    mydb.commit()
-    mydb.close()
+    if len(lista) == 5:
+        sql = 'INSERT INTO tb_AgendaCisam (nome_completo, data_nasc, telefone, email, agendamento) VALUES ("{0}","{1}", "{2}", "{3}", "{4}" );'.format(lista[0], lista[1], lista[2], lista[3], lista[4])
+        mycursor.execute(sql)
+        mydb.commit()
+        mydb.close()
+    if len(lista) == 6:
+        sql = 'INSERT INTO tb_AgendaCisam (nome_completo, data_nasc, telefone, email, agendamento, user_queixa) VALUES ("{0}","{1}", "{2}", "{3}", "{4}", "{5}");'.format(lista[0], lista[1], lista[2], lista[3], lista[4], lista[5])
+        mycursor.execute(sql)
+        mydb.commit()
+        mydb.close()
 
 
 #=========== Ação submeter ===============================================
@@ -705,12 +714,20 @@ class ActionSubmit(Action):
         elif controle == 1 and cpf == 'nao tenho' or controle == '1' and cpf == 'nao tenho':
             try:
                 dispatcher.utter_message(text="Enviando para o DB 2")
-                try:
-                    DataUpdate2(nome_completo, data_nasc, telefone, email, especialidade)
-                    return [AllSlotsReset()]
-                except Exception as erro:
-                    dispatcher.utter_message(text="Erro ao enviar para o banco")
-                    return [AllSlotsReset()]
+                if queixa == None:
+                    try:
+                        DataUpdate2(nome_completo, data_nasc, telefone, email, especialidade)
+                        return [AllSlotsReset()]
+                    except Exception as erro:
+                        dispatcher.utter_message(text="Erro ao enviar para o banco")
+                        return [AllSlotsReset()]
+                elif queixa != None:
+                    try:
+                        DataUpdate2(nome_completo, data_nasc, telefone, email, especialidade, queixa)
+                        return [AllSlotsReset()]
+                    except Exception as erro:
+                        dispatcher.utter_message(text="Erro ao enviar para o banco")
+                        return [AllSlotsReset()]
                 #==============================================================
             except Exception as erro:
                dispatcher.utter_message(text=erro)

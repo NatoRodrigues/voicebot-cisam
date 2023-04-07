@@ -224,6 +224,7 @@ responses:
   utter_sem_prontuario:
   - text: |
       Ops! O seu CPF não foi encontrado, vamos tentar novamente?
+      Diga (s) para sim ou (n) para não
     buttons:
       - title: "Sim."
         payload: 's'
@@ -234,7 +235,8 @@ responses:
   - text: "Digite ou diga novamente o seu CPF"
 
   utter_sem_prontuario_2: 
-  - text: "Desculpe, ainda não encontramos o seu CPF. Você possui prontuário no CISAM?"
+  - text: "Desculpe, ainda não encontramos o seu CPF. Você possui prontuário no CISAM?
+      Diga Sim ou não"
     buttons:
       - title: "Sim."
         payload: 'sim'
@@ -242,7 +244,8 @@ responses:
         payload: 'n'
 
   utter_sem_prontuario_2_sim:
-  - text: "Peço desculpas pelo inconveniente. Para tentar resolver a sua questão, vou precisar de alguns dados abaixo, por gentileza"
+  - text: "Peço desculpas pelo inconveniente. Para tentar resolver a sua questão, vou precisar de alguns dados abaixo, por gentileza \n
+      Diga prosseguir"
     buttons:
       - title: "Continuar"
         payload: 'prosseguir'
